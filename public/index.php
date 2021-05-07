@@ -23,11 +23,6 @@
       {
           return $this -> productDimensions;
       }
-
-      public function sumWeight($weight)
-      {
-          return array_sum($weight);
-      }
   }
 ?>
 
@@ -250,7 +245,7 @@
 
   <script>
   let newFormBox = document.getElementById('new-form-box');
-  console.log(newFormBox);
+  let newBox = document.getElementById("item-info");
 
   function storageReset() {
     let result = document.getElementsByClassName('result')[0];
@@ -263,7 +258,7 @@
   }
 
   function disPlayForm() {
-    let newBox = document.getElementById("item-info");
+
     newBox.style.display = "block";
   }
 
@@ -273,6 +268,17 @@
     let newWidth = document.getElementsByName("newWidth")[0].value;
     let newHeight = document.getElementsByName("newHeight")[0].value;
     let newLength = document.getElementsByName("newLength")[0].value;
+
+    console.log(newProductName);
+    console.log(newProductWeight);
+    console.log(newWidth);
+    console.log(newHeight);
+    console.log(newLength);
+
+    if (newProductName == "" || newProductWeight == "" || newWidth == "" || newHeight == "" || newLength == "") {
+      alert("All inputs must be filled out");
+      return false;
+    }
 
     const div = document.createElement('div');
 
@@ -298,25 +304,29 @@
         </div>
 `;
 
-    console.log(div);
-
 
     if (localStorage.lenth !== 0) {
       let storageNum = localStorage.length + 1;
-      console.log(storageNum);
       localStorage.setItem(storageNum, div.innerHTML);
 
       let newDivs = localStorage.getItem(storageNum);
 
-      console.log(newDivs);
       newFormBox.innerHTML += newDivs;
     }
 
+    document.getElementsByName("newProductName")[0].value = '';
+    document.getElementsByName("newProductWeight")[0].value = '';
+    document.getElementsByName("newWidth")[0].value = '';
+    document.getElementsByName("newHeight")[0].value = '';
+    document.getElementsByName("newLength")[0].value = '';
+
+    newBox.style.display = "none";
+
+
   }
-  console.log(localStorage);
 
   if (localStorage.length !== 0) {
-    console.log(newFormBox);
+
     for (let i = 1; i <= localStorage.length; i++) {
       newFormBox.innerHTML += localStorage.getItem(i);
     }
